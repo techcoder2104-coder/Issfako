@@ -2,7 +2,7 @@ import { createContext, useContext, useState, useEffect } from 'react'
 import axios from 'axios'
 
 // Set axios base URL
-axios.defaults.baseURL = 'http://localhost:5000/api'
+axios.defaults.baseURL = 'https://lssnako-qu2r.vercel.app/api'
 
 const AuthContext = createContext()
 
