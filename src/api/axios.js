@@ -2,8 +2,18 @@ import axios from 'axios'
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://lssnako-qu2r.vercel.app'
 
+// Ensure /api prefix is present
+const ensureApiPrefix = (url) => {
+  if (!url.includes('/api')) {
+    return url + '/api'
+  }
+  return url
+}
+
+const finalBaseURL = ensureApiPrefix(API_BASE_URL)
+
 const api = axios.create({
-  baseURL: API_BASE_URL
+  baseURL: finalBaseURL
 })
 
 // Add token to requests and handle FormData
