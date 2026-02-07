@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://lssnako-production.up.railway.app'
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://lssnako-qu2r.vercel.app'
 
 const api = axios.create({
   baseURL: API_BASE_URL
