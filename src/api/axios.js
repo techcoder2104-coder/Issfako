@@ -5,7 +5,7 @@ const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://lssnako-qu2r.verce
 // Ensure /api prefix is present
 const ensureApiPrefix = (url) => {
   if (!url.includes('/api')) {
-    return url + '/api/admin/'
+    return url + '/api'
   }
   return url
 }
