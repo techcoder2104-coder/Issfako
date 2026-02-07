@@ -137,7 +137,7 @@ export default function BannersPage() {
       {/* Upload Form */}
       {showForm && (
         <div className="bg-white rounded-lg shadow p-6 border border-gray-200">
-          <h2 className="text-xl font-semibold mb-6">Upload New Banner</h2>
+           <h2 className="text-xl font-semibold mb-6">Create New Banner</h2>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Title */}
@@ -228,20 +228,20 @@ export default function BannersPage() {
                 className="flex items-center gap-2 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition font-medium disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <Upload size={18} />
-                {submitting ? 'Uploading...' : 'Upload Banner'}
+                {submitting ? 'Creating...' : 'Create Banner'}
               </button>
               <button
                 type="button"
                 onClick={() => {
-                  setShowForm(false)
-                  setImagePreview(null)
-                  setFormData({
-                    title: '',
-                    type: 'category',
-                    order: 0,
-                    bannerImage: null
-                  })
-                }}
+                   setShowForm(false)
+                   setImagePreview(null)
+                   setFormData({
+                     title: '',
+                     type: 'category',
+                     order: 0,
+                     imageUrl: ''
+                   })
+                 }}
                 className="px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition font-medium"
               >
                 Cancel
@@ -304,9 +304,6 @@ export default function BannersPage() {
                     <span className={banner.active ? 'text-green-600' : 'text-gray-400'}>
                       {banner.active ? 'Active' : 'Inactive'}
                     </span>
-                  </p>
-                  <p className="text-xs text-gray-500 break-all">
-                    <span className="font-medium">Image:</span> {banner.image}
                   </p>
                 </div>
 
