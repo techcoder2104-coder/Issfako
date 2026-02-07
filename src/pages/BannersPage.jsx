@@ -12,7 +12,7 @@ export default function BannersPage() {
     title: '',
     type: 'category',
     order: 0,
-    bannerImage: null
+    imageUrl: ''
   })
   const [imagePreview, setImagePreview] = useState(null)
 
@@ -50,50 +50,41 @@ export default function BannersPage() {
     }))
   }
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0]
-    if (file) {
-      setFormData(prev => ({
-        ...prev,
-        bannerImage: file
-      }))
-
-      // Show preview
-      const reader = new FileReader()
-      reader.onload = (event) => {
-        setImagePreview(event.target.result)
-      }
-      reader.readAsDataURL(file)
-    }
+  const handleImageUrlChange = (e) => {
+    const url = e.target.value
+    setFormData(prev => ({
+      ...prev,
+      imageUrl: url
+    }))
+    setImagePreview(url)
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    if (!formData.title || !formData.type || !formData.bannerImage) {
+    if (!formData.title || !formData.type || !formData.imageUrl) {
       toast.warning('Please fill all required fields')
       return
     }
 
-    const uploadFormData = new FormData()
-    uploadFormData.append('title', formData.title)
-    uploadFormData.append('type', formData.type)
-    uploadFormData.append('order', formData.order)
-    uploadFormData.append('bannerImage', formData.bannerImage)
-
     try {
       setSubmitting(true)
-      console.log('📤 Uploading banner...')
-      const response = await api.post('/banners', uploadFormData)
+      console.log('📤 Creating banner...')
+      const response = await api.post('/banners', {
+        title: formData.title,
+        type: formData.type,
+        order: formData.order,
+        imageUrl: formData.imageUrl
+      })
 
       if (response.status === 201) {
-        console.log('✅ Banner uploaded:', response.data)
-        toast.success('Banner uploaded successfully!')
+        console.log('✅ Banner created:', response.data)
+        toast.success('Banner created successfully!')
         setFormData({
           title: '',
           type: 'category',
           order: 0,
-          bannerImage: null
+          imageUrl: ''
         })
         setImagePreview(null)
         setShowForm(false)
@@ -197,20 +188,21 @@ export default function BannersPage() {
                 <p className="text-xs text-gray-500 mt-1">Lower numbers appear first</p>
               </div>
 
-              {/* Image Upload */}
+              {/* Image URL */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Banner Image *
+                  Banner Image URL *
                 </label>
                 <input
-                  type="file"
-                  name="bannerImage"
-                  onChange={handleFileChange}
-                  accept="image/*"
+                  type="url"
+                  name="imageUrl"
+                  value={formData.imageUrl}
+                  onChange={handleImageUrlChange}
+                  placeholder="https://example.com/banner.jpg"
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
                   required
                 />
-                <p className="text-xs text-gray-500 mt-1">JPG, PNG (recommended: 1200x400px)</p>
+                <p className="text-xs text-gray-500 mt-1">Enter image URL (recommended: 1200x400px)</p>
               </div>
             </div>
 
